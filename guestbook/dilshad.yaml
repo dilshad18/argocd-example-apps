@@ -6,7 +6,7 @@ metadata:
     app: dilshad
   name: dilshad
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: dilshad
@@ -18,7 +18,26 @@ spec:
         app: dilshad
     spec:
       containers:
-      - image: nginx
+      - image: nginx:1.9.8
         name: nginx
         resources: {}
 status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: dilshad
+  name: dilshad
+spec:
+  ports:
+  - name: dilshad
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: dilshad
+  type: ClusterIP
+status:
+  loadBalancer: {}
